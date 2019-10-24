@@ -1,5 +1,5 @@
 /*
- * Amazon FreeRTOS BLE V1.0.0
+ * Amazon FreeRTOS BLE V2.0.0
  * Copyright (C) 2018 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -848,10 +848,7 @@ BTStatus_t IotBle_SendIndication( IotBleEventResponse_t * pxResp,
 
     if( pxResp != NULL )
     {
-        if( bConfirm == true )
-        {
-            _BTInterface.handlePendingIndicationResponse = pxResp->pAttrData->handle;
-        }
+        _BTInterface.handlePendingIndicationResponse = pxResp->pAttrData->handle;
 
         status = _BTInterface.pGattServerInterface->pxSendIndication( _BTInterface.serverIf,
                                                                       pxResp->pAttrData->handle,

@@ -12,16 +12,16 @@ foreach(module IN LISTS AFR_MODULES)
 endforeach()
 
 # Global variables.
-set(AFR_MODULES               "" CACHE INTERNAL "List of Amazon FreeRTOS modules.")
-set(AFR_MODULES_PORT          "" CACHE INTERNAL "List of porting layer targets defined from vendors.")
-set(AFR_MODULES_PUBLIC        "" CACHE INTERNAL "List of public Amazon FreeRTOS modules.")
-set(AFR_MODULES_BUILD         "" CACHE INTERNAL "List of Amazon FreeRTOS modules to build.")
-set(AFR_MODULES_ENABLED       "" CACHE INTERNAL "List of enabled Amazon FreeRTOS modules.")
-set(AFR_MODULES_ENABLED_USER  "" CACHE INTERNAL "List of Amazon FreeRTOS modules enabled by user.")
-set(AFR_MODULES_ENABLED_DEPS  "" CACHE INTERNAL "List of Amazon FreeRTOS modules enabled due to dependencies.")
-set(AFR_DEMOS_ENABLED         "" CACHE INTERNAL "List of supported demos for Amazon FreeRTOS.")
-set(AFR_TESTS_ENABLED         "" CACHE INTERNAL "List of supported tests for Amazon FreeRTOS.")
-set(3RDPARTY_MODULES_ENABLED  "" CACHE INTERNAL "List of 3rdparty libraries enabled due to dependencies.")
+set(AFR_MODULES                 "" CACHE INTERNAL "List of Amazon FreeRTOS modules.")
+set(AFR_MODULES_PORT            "" CACHE INTERNAL "List of porting layer targets defined from vendors.")
+set(AFR_MODULES_PUBLIC          "" CACHE INTERNAL "List of public Amazon FreeRTOS modules.")
+set(AFR_MODULES_BUILD           "" CACHE INTERNAL "List of Amazon FreeRTOS modules to build.")
+set(AFR_MODULES_ENABLED         "" CACHE INTERNAL "List of enabled Amazon FreeRTOS modules.")
+set(AFR_MODULES_ENABLED_USER    "" CACHE INTERNAL "List of Amazon FreeRTOS modules enabled by user.")
+set(AFR_MODULES_ENABLED_DEPS    "" CACHE INTERNAL "List of Amazon FreeRTOS modules enabled due to dependencies.")
+set(AFR_DEMOS_ENABLED           "" CACHE INTERNAL "List of supported demos for Amazon FreeRTOS.")
+set(AFR_TESTS_ENABLED           "" CACHE INTERNAL "List of supported tests for Amazon FreeRTOS.")
+set(3RDPARTY_MODULES_ENABLED    "" CACHE INTERNAL "List of 3rdparty libraries enabled due to dependencies.")
 
 # Global setting for whether enable all modules by default or not.
 if(NOT AFR_ENABLE_ALL_MODULES)
@@ -332,7 +332,10 @@ function(afr_resolve_dependencies)
         set(exe_target aws_demos)
         set(exe_base demo_base)
     endif()
-    __search_afr_dependencies(${exe_target} dependencies)
+    # If neither demos nor tests are enabled, then don't search the aws_demos/aws_tests targets.
+    if(AFR_ENABLE_DEMOS OR AFR_ENABLE_TESTS)
+        __search_afr_dependencies(${exe_target} dependencies)
+    endif()
     afr_module_dependencies(${exe_base} INTERFACE ${dependencies})
 
     # Make sure kernel can be enabled first.

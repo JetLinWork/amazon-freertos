@@ -1,5 +1,5 @@
 /*
- * Amazon FreeRTOS MQTT V2.0.0
+ * Amazon FreeRTOS MQTT V2.1.0
  * Copyright (C) 2018 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -256,13 +256,13 @@ void IotMqtt_ReceiveCallback( void * pNetworkConnection,
  *
  * // Example network abstraction types.
  * IotNetworkServerInfo_t serverInfo = { ... };
- * IotNetworkCredentialInfo_t credentialInfo = { ... };
+ * IotNetworkCredentials_t credentialInfo = { ... };
  * IotNetworkInterface_t networkInterface = { ... };
  *
  * // Example using a generic network implementation.
  * networkInfo.createNetworkConnection = true;
- * networkInfo.pNetworkServerInfo = &serverInfo;
- * networkInfo.pNetworkCredentialInfo = &credentialInfo;
+ * networkInfo.u.setup.pNetworkServerInfo = &serverInfo;
+ * networkInfo.u.setup.pNetworkCredentialInfo = &credentialInfo;
  * networkInfo.pNetworkInterface = &networkInterface;
  *
  * // Set the members of the connection info (password and username not used).
